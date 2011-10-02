@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Like - another bookmark?</title>
+  <%= stylesheet_link_tag "style" %>
+  <%= javascript_include_tag "jquery" %>
+  <%= csrf_meta_tag %>
+</head>
+<script type="text/javascript">
+</script>
+<body>
+
+<div class="wrapLoginForm">
+	<% form_tag screate_path do %>
+		<ul>
+			<li><%=label_tag :name, "Username : "%> <%=text_field_tag :name %></li>
+			<li><%=label_tag :pass, "Password : "%> <%=password_field_tag :pass %></li>
+			<li><%=submit_tag "Login"%></li>
+		</ul>
+	<% end %>
+
+	<%=link_to "Register", unew_url%>
+
+	<div class="alert"><%=flash[:alert]%></div>
+	<div class="notice"><%=flash[:notice]%></div>
+</div>
+
+</body>
+</html>
+
+
+

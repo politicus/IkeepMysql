@@ -1,0 +1,9 @@
+<div class="cateList">
+	<ul>
+		<% get_category_by_uid(session[:user].id).each do |c| %>
+			<li class="catelistid<%=c.id%>"><%=link_to c.cname, cshow_url(session[:user].cache_slug, c.cache_slug)%></li>
+		<% end %>
+		<li><%=link_to "Uncategorized", cshow_url(session[:user].friendly_id, "uncategorized")%></li>
+		<li><%=link_to "Manage Category", cedit_url, :id => "manageCate" ,:class => "manage"%></li>
+	</ul>
+</div>

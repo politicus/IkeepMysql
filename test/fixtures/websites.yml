@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  url: MyString
+  msg: MyString
+  cid: 1
+  cache_slug: MyString
+
+two:
+  title: MyString
+  url: MyString
+  msg: MyString
+  cid: 1
+  cache_slug: MyString

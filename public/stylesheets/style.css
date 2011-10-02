@@ -1,0 +1,316 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
+	font-family: tahoma;
+	color: #443737;
+	background: #88B8B8;
+}
+ul, li, h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+input[type=text], input[type=password]  {
+	border: 1px solid #d5d5d5;
+	padding: 3px;
+}
+input[type=submit] {
+	background: #D5EF04;
+    border: 1px solid #9FC120;
+    color: #000000;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 3px 10px;f
+}
+form label {
+	font-weight: bold;
+	color: #F64274;
+	display: inline-block;
+	width: 80px;
+	margin-right: 5px;
+	text-align: right;
+}
+form ul li {
+	margin-bottom: 8px;
+}
+a {
+	color: #0289CE;
+	text-decoration: none;
+}
+a:hover {
+	color: #F64274;
+}
+.alert {
+	color: red;
+	font-size: 12px;
+}
+.notice {
+	color: #2FBF00;
+	font-size: 12px;
+}
+#wrap {
+	width: 960px;
+	background: #fff;
+	margin: 0 auto;
+	padding: 15px;
+	overflow: hidden;
+}
+label.error {
+	font-size: 10px;
+	color: red;
+	width: auto;
+	font-weight: normal;
+	margin-left: 10px;
+}
+
+/* Other Page */
+#col1 {
+	width: 730px;
+	float: left;
+}
+#col2 {
+	width: 220px;
+	float: left;
+	display: inline;
+	margin-left: 10px;
+}
+#menu {
+	overflow: hidden;
+	margin-bottom: 30px;
+	margin-top: 10px;
+}
+#menu a {
+	
+	font-size: 17px;
+}
+#menu .menuList {
+	display: inline-block;
+	width: 80px;
+	float: left;
+}
+#menu .welcomeMsg {
+	float: right;
+	margin-right: 30px;
+	color: #F64274;
+	font-weight: bold;
+}
+#menu .welcomeMsg a {
+	color: #0289CE;
+	font-weight: normal;
+	font-size: 12px;
+}
+.manage {
+	color: #F64274;
+	font-size: 10px;
+	margin-top: 7px;
+	display: block;
+	width: 80px;
+}
+.manage:hover {
+	text-decoration: underline;
+}
+.webList {
+	margin-bottom: 10px;
+}
+.webDetail h3 {
+    margin-bottom: 10px;
+    color: #FF4949;
+}
+
+/* User page */
+.webList li {
+	margin-bottom: 8px;
+}
+.webList .link {
+	
+}
+.webList .detail {
+	color: #B8B8B8;
+    font-size: 11px;
+}
+.webList .editWeb {
+	display: inline-block;
+	width: 20px;
+}
+.pg {
+	margin-top: 15px;
+}
+.pg .current {
+	font-weight: bold;
+}
+#loadingBox {
+	display: block;
+	width: 16px;
+	height: 16px;
+	margin-bottom: 10px;
+}
+
+/* Login Page */
+.wrapLoginForm {
+	background: #fff;
+	width: 335px;
+	padding: 15px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	margin: 200px auto 0;
+}
+.wrapLoginForm input[type=text], input[type=password] {
+	width: 230px;
+}
+.wrapLoginForm input[type=submit] {
+	margin-left: 90px;
+}
+.wrapLoginForm .alert, .wrapLoginForm .notice {
+	margin-top: 15px;
+}
+
+/* Right Column */
+.cateList li {
+	margin-bottom: 7px;
+}
+
+/* fancybox inline content */
+.manageCateList {
+	margin-top: 15px;
+	margin-left: 15px;
+}
+.manageCateList li {
+	margin-bottom: 3px;
+	padding: 3px;
+	width: 330px;
+	cursor: pointer;
+}
+.manageCateList li:hover {
+	background: #F2F2F2;
+}
+.manageCateList .cname {
+	width: 200px;
+}
+.manageCateList textarea {
+	width: 180px !important;
+	border: 1px solid #d5d5d5;
+}
+.manageCateList .cname {
+    display: inline-block;
+}
+.manageCateList .delete {
+    display: inline-block;
+    width: 50px;
+}
+
+
+/* Form ad web */
+.formAddWeb input[type=text] {
+	width: 420px;
+}
+.formAddWeb select {
+	width: 220px;
+}
+.formAddWeb input[type=submit] {
+	margin-left: 89px;
+}
+.formAddWeb {
+	background: #E7EBEB;
+	padding: 15px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	width: 540px;
+}
+#renderFormAjax {
+	margin-bottom: 10px;
+}
+.formEditWeb {
+	width: 450px;
+	padding: 15px;
+}
+.formEditWeb label {
+	text-align: left;
+	width: 80px;
+}
+.formEditWeb input[type=text] {
+	width: 350px;
+}
+.formEditWeb label.error {
+	width: auto;
+}
+.deleteWeb {
+	display: inline-block;
+	width: 40px;
+	float: right;
+	margin-top: 10px;
+}
+#loadingBoxEdit {
+    display: inline;
+    margin-left: 15px;
+    width: 16px;
+}
+
+/* Update User */
+.formUpdateUser {
+	margin: 15px auto 0;
+	background: #fff;
+	width: 350px;
+	padding: 15px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+.formUpdateUser label {
+	width: 100px;
+}
+.formUpdateUser input[type=text] {
+	width: 230px;
+}
+.formUpdateUser #user_submit {
+	margin-left: 110px;
+}
+.formUpdateUser label.error {
+	width: auto;
+}
+
+/* fancybox */
+.fancyboxBg {
+	background: #88B8B8;
+}
+.changeComplete {
+    text-align: center;
+    color: #00BA0F;
+}
+
+/* ketchup */
+.ketchup-custom {
+	margin-top: 5px;
+	line-height: 1em;
+	display: none;
+}
+.ketchup-custom li, .formUpdateUser label.error {
+	font-size: 10px;
+	text-transform: uppercase;
+	border: 0;
+	color: white;
+	background: #FF4949;
+	padding: 1px 10px;
+	margin-top: 1px;
+}
+#formRegis .ketchup-custom {
+    width: 323px;
+    margin-left: 5px;
+}
+.formAddWeb .ketchup-custom {
+    width: 426px;
+    margin-left: 90px;
+}
+.formUpdateUser .ketchup-custom {
+    margin-left: 6px;
+    width: 341px !important;
+}
+.formUpdateUser label.error {
+    margin-left: 6px;
+    margin-top: 5px;
+    padding: 1px 10px !important;
+    text-align: left;
+    width: 320px !important;
+}

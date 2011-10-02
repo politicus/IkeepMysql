@@ -1,0 +1,12 @@
+This script is open source private website bookmark. You can save every website as you want to save. It's private.
+
+See Similar demo : http://like.iamrails.com   (If you can't enter to demo site please try again later becasue maybe server is down. I used cheap VPS to setup this script)
+
+== Getting Started
+
+1. Download to your server.
+2. edit database.yml in folder config.
+3. run command : rake db:migrate
+4. run command : rake db:seed
+5. your username = "admin" and password = "123456"
+6. Let's enjoy!

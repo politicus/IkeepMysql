@@ -1,0 +1,7 @@
+<%=render :partial => "form_ajax"%>
+
+<ul>
+	<% @web.each do |w| %>
+	<li><%=link_to w.title, wshow_url(w.friendly_id)%></li>
+	<% end %>
+</ul>

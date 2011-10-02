@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  cname: MyString
+  uid: 1
+  cache_slug: MyString
+
+two:
+  cname: MyString
+  uid: 1
+  cache_slug: MyString

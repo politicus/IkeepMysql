@@ -1,0 +1,72 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Like - another bookmark?</title>
+  <%= stylesheet_link_tag "style" %>
+  <%= javascript_include_tag "jquery", "jquery.ketchup.all.min" %>
+  <%= csrf_meta_tag %>
+</head>
+<script type="text/javascript">
+$(document).ready(function() {
+	//$("form").validate();
+
+	$.ketchup.createErrorContainer(function (form, el) {
+	return $('<ul/>', {
+	    'class': 'ketchup-custom'
+	}).insertAfter(el);
+	}).addErrorMessages(function (form, el, container, messages) {
+	    container.html('');
+	    for (i = 0; i < messages.length; i++) {
+	        $('<li/>', {
+	            text: messages[i]
+	        }).appendTo(container);
+	    }
+	}).showErrorContainer(function (form, el, container) {
+	    container.slideDown('fast');
+	}).hideErrorContainer(function (form, el, container) {
+	    container.slideUp('fast');
+	});
+
+	$('#formRegis').ketchup({
+	    validateEvents: 'blur focus keyup'
+	}, {
+	    '.required': 'required',
+	    '#user_name': 'username, minlength(6)',
+	    "#user_pass": "minlength(6)",
+	    "#user_email": "email"
+	});
+
+});
+</script>
+<body>
+
+<div class="wrapLoginForm">
+	<% form_for(:user, @user, :url => {:controller => "user", :action => "create"}, :html => {:id =>"formRegis"}) do |f| %>
+		<ul>
+			<li>
+				<%=f.label :name, "Username : "%>
+				<%=f.text_field :name, :autocomplete => "off", :class => "required"%>
+			</li>
+			<li>
+				<%=f.label :pass, "Password : "%>
+				<%=f.password_field :pass, :autocomplete => "off", :class => "required"%>
+			</li>
+			<li>
+				<%=f.label :email, "Email : "%>
+				<%=f.text_field :email, :autocomplete => "off", :class => "required email"%>
+			</li>
+			<li>
+				<%=f.submit "Register"%>
+			</li>
+		</ul>
+	<% end %>
+
+	<%=link_to "Go back to Login", root_url%>
+</div>
+
+</body>
+</html>
+
+
+

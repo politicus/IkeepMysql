@@ -1,0 +1,16 @@
+<div id="mc">
+	<% form_for :cate, Category.new, :url => { :controller => "category", :action => "create" }, :html => { :class => "formAddCate" } do |f| %>
+		<%=f.label :cname, "Category : "%>
+		<%=f.text_field :cname%>
+		<%=f.submit "Create"%>
+	<% end %>
+	<div class="manageCateList">
+		<ul>
+			<% get_category_by_uid(session[:user].id).each do |c| %>
+				<li class="catelistid<%=c.id%>">
+					<div class="cname" id="cnameid<%=c.id%>" title="Double Click for edit category"><%=c.cname%></div><div class="delete"><%=link_to "Delete", cdestroy_url(c.id), :class => "deleteCategory", :rel => c.id%></div>
+				</li>
+			<% end %>
+		</ul>
+	</div>
+</div>

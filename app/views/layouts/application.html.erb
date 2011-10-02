@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Like - another bookmark?</title>
+  <%= stylesheet_link_tag "style", "jquery.fancybox-1.3.4" %>
+  <%= javascript_include_tag "jquery", "validate", "jquery.ketchup.all.min", "address", "fancybox/jquery.fancybox-1.3.4.pack", "jquery.jeditable.mini" %>
+  <%=render "layouts/meta.html.erb"%>
+<script type="text/javascript">
+$(document).ajaxStart(function(){ 
+	$('#loading').show(); 
+}).ajaxStop(function(){ 
+  	$('#loading').hide();
+});
+
+$(document).ready(function() {
+	//validate web from
+	$.ketchup.createErrorContainer(function (form, el) {
+	return $('<ul/>', {
+	    'class': 'ketchup-custom'
+	}).insertAfter(el);
+	}).addErrorMessages(function (form, el, container, messages) {
+	    container.html('');
+	    for (i = 0; i < messages.length; i++) {
+	        $('<li/>', {
+	            text: messages[i]
+	        }).appendTo(container);
+	    }
+	}).showErrorContainer(function (form, el, container) {
+	    container.slideDown('fast');
+	}).hideErrorContainer(function (form, el, container) {
+	    container.slideUp('fast');
+	});
+
+	$('.formAddWeb').ketchup({
+	    validateEvents: 'blur keyup'
+	}, {
+	    '.required': 'required',
+	    "#web_url" : "url"
+	});
+
+	$('#loading').hide();
+
+	//get title form url
+	$("#web_url").bind('paste', function(e) {
+	    var el = $(this);
+	    setTimeout(function() {
+	        var text = $(el).val();
+	   		var url = $("#web_url").val();
+			$.post("<%=wajaxgettitle_url%>", {url : url}, function(data) {
+				$("#web_title").val(data);
+				return false;
+			}).error(function() {
+				console.log("error");
+			});
+	    }, 50);
+	});
+
+	//submit web
+	var liNumB = $(".webList li").length;
+	$(".formAddWeb").live("submit", function(e) {
+		e.preventDefault();
+		var title = $("#web_title").val();
+		var url = $("#web_url").val();
+		var msg = $("#web_msg").val();
+		var cid = $("#web_cid").val();
+		$.post("<%=wajaxcreate_url%>", {title:title, url:url, msg:msg, cid:cid}, function(data) {
+			$.get(window.location.pathname+"?page=1", function(data) {
+				$(".web").html(data);
+				var title = $("#web_title").val("");
+				var url = $("#web_url").val("");
+				var msg = $("#web_msg").val("");
+			});
+		}, "json");
+	});
+
+	//pagination ajax
+	$(".pg a").live("click", function(e) {
+		e.preventDefault();
+		var path = $(this).attr("href");
+		path = path.substring(1, path.length);
+		$.get("<%=root_url%>"+path, function(data) {
+			$(".web").html(data);
+		});
+	});
+
+	//fancybox for create category
+	$("#manageCate").fancybox({
+		'titlePosition'		: 'inside',
+		'overlayShow'		: true,
+		'overlayColor'		: "#fff"
+	});
+	$(".welcomeMsg a").fancybox({
+		'titlePosition'		: 'inside',
+		'width' 			: '450',
+        'height' 			: '260',
+		'autoDimensions' 		: false,
+		'onComplete'		: function() {
+			$("#fancybox-content").addClass("fancyboxBg");
+		},
+		'onClosed'			: function() {
+			$("#fancybox-content").removeClass("fancyboxBg");
+		},
+		'overlayShow'		: true,
+		'overlayColor'		: "#fff"
+	});
+
+	//submit category
+	$(".formAddCate").live("submit", function(e) {
+		var cname = $("#cate_cname").val();
+		$.post("<%=ccreate_url%>", {cname : cname}, function(data) {
+			var id = data.category.id
+			$(".manageCateList ul").prepend("<li class=\"catelistid"+data.category.id+"\"><div class=\"cname\" id=\"cnameid"+data.category.id+"\">"+data.category.cname+"</div><div class=\"delete\"><a href=\"<%=root_url%>category/delete/"+data.category.id+"\" class=\"deleteCategory\" rel=\""+data.category.id+"\">Delete</a></div></li>");
+			
+			$(".cateList ul").prepend("<li class=\"catelistid"+data.category.id+"\"><a href=\"<%=root_url%>user/<%=session[:user].cache_slug%>/category/"+data.category.cache_slug+"\">"+data.category.cname+"</a></li>");
+			var cname = $("#cate_cname").val("");
+			$("#web_cid").prepend("<option value=\""+data.category.id+"\">"+data.category.cname+"</option>");
+		});
+		return false;
+	});
+
+	//click edit category link
+	$(".cname").live("click", function(e) {
+		$(this).editable(submitEdit, { 
+			type   : 'textarea',
+			submitdata: { _method: "post" },
+			select : true,
+			submit : 'OK',
+			cancel : 'cancel',
+			cssclass : "editable",
+			indicator : 'Saving...',
+		
+		});
+	});
+	function submitEdit(value, settings) {
+		var id = $(this).attr("id").replace("cnameid", "");
+		$.ajax({
+			url: "<%=cajaxupdate_url%>",
+			type: "post",
+			data : {value : value, id : id},
+			dataType : "json",
+			complete : function(data) {
+				$(".cateList .catelistid"+id).html(data.responseText+"");
+			  	var val = $("#web_cid option").attr("value");
+			  	$("#web_cid option[value="+id+"]").html(value);
+			}
+		});
+		return value;
+	}
+
+	//click delete category
+	$(".deleteCategory").live("click", function(e) {
+		e.preventDefault();
+		var path = $(this).attr("href");
+		var id = $(this).attr("rel");
+		$.post(path, {test : "test"}, function(data) {
+			$(".catelistid"+id).remove();
+			$("#web_cid option[value="+id+"]").remove();
+		});
+		$.get("<%=ushow_url%>"+"?page=1", function(data) {
+			$(".web").html(data);
+		});
+	});
+
+	//click update web
+	$(".formEditWeb").live("submit", function(e) {
+		e.preventDefault();
+		var title = $("#website_title").val();
+		var url = $("#website_url").val();
+		var msg = $("#website_msg").val();
+		var cid = $("#website_cid").val();
+		var id = $("#website_id").val();
+		$.post("<%=wupdate_url%>", {title:title, url:url, msg:msg, cid:cid, id:id}, function(data) {
+			if("<%=params[:name]%>" == "<%=session[:user].friendly_id%>") {
+				$.get("<%=cshow_url(session[:user].friendly_id, params[:id])%>"+"?page=1", function(data) {
+					$(".web").html(data);
+				});
+			}
+			else {
+				$.get("<%=ushow_url(session[:user].friendly_id)%>"+"?page=1", function(data) {
+					$(".web").html(data);
+				});
+			}
+		});
+		return false;
+	});
+
+	//delete web
+	$(".deleteWeb").live("click", function(e){
+		e.preventDefault();
+		$("#loadingBoxEdit").show();
+		var title = $(this).attr("rel");
+		if(confirm("Do you want to delete : "+title) == true) {
+			var url = $(this).attr("href");
+			$.get(url, {}, function(data) {
+				$("#website_title, #website_url, #website_msg, #website_cid, #website_id").css("color", "#CECECE");
+				$.get("<%=ushow_url%>"+"?page=1", function(data) {
+					$(".web").html(data);
+				});
+				$("#loadingBoxEdit").hide();
+			});
+		}
+	});
+});
+</script>
+<body>
+
+<div id="wrap">
+	<div id="menu">
+		<div class="menuList"><%=link_to "Home", ushow_url(session[:user].friendly_id)%></div>
+		<div class="menuList"><%=link_to "Logout", sdestroy_url%></div>
+		<div class="welcomeMsg">Welcome, <%=link_to session[:user].name, uedit_url(session[:user].id)%></div>
+	</div>
+
+	<div id="col1">
+	<%= yield %>
+	</div>
+
+	<div id="col2">
+		<%=render "layouts/col_right"%>
+	</div>
+
+</div>
+
+</body>
+</html>
+

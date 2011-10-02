@@ -1,0 +1,19 @@
+<% form_for(:web, @web, :url => {:controller => "website", :action => "create"}) do |f| %>
+	<ul>
+		<li>
+			<%=f.label :title, "Title : "%>
+			<%=f.text_field :title%>
+		</li>
+		<li>
+			<%=f.label :url, "URL : "%>
+			<%=f.text_field :url%>
+		</li>
+		<li>
+			<%=f.label :msg, "Message : "%>
+			<%=f.text_field :msg%>
+		</li>
+		<li>
+			<%=f.submit "Submit"%>
+		</li>
+	</ul>
+<% end %>

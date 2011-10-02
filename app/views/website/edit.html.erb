@@ -1,0 +1,77 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	//$(".formEditWeb").validate();
+	$.ketchup.createErrorContainer(function (form, el) {
+	return $('<ul/>', {
+	    'class': 'ketchup-custom'
+	}).insertAfter(el);
+	}).addErrorMessages(function (form, el, container, messages) {
+	    container.html('');
+	    for (i = 0; i < messages.length; i++) {
+	        $('<li/>', {
+	            text: messages[i]
+	        }).appendTo(container);
+	    }
+	}).showErrorContainer(function (form, el, container) {
+	    container.slideDown('fast');
+	}).hideErrorContainer(function (form, el, container) {
+	    container.slideUp('fast');
+	});
+
+	$('.formEditWeb').ketchup({
+	    validateEvents: 'blur keyup'
+	}, {
+	    '.required': 'required',
+	    "#website_url" : "url"
+	});
+
+
+	$("#loadingBoxEdit").hide();
+
+	//get title form url
+	$("#website_url").bind('paste', function(e) {
+		$("#loadingBoxEdit").show();
+	    var el = $(this);
+	    setTimeout(function() {
+	        var text = $(el).val();
+	   		var url = $("#website_url").val();
+			$.post("<%=wajaxgettitle_url%>", {url : url}, function(data) {
+				$("#website_title").val(data);
+				$("#loadingBoxEdit").hide();
+				return false;
+			}).error(function() {
+				console.log("error");
+			});
+	    }, 50);
+	});
+});
+</script>
+
+<%=form_for @web, :url => wupdate_url, :html => { :class => "formEditWeb" } do |f|%>
+	<ul>
+		<li>
+			<%=f.label :title, "Title : "%>
+			<%=f.text_field :title, :class => "required"%>
+		</li>
+		<li>
+			<%=f.label :url, "URL : "%>
+			<%=f.text_field :url, :class => "required url"%>
+		</li>
+		<li>
+			<%=f.label :cid, "Catetory : "%>
+			<%=f.collection_select :cid, Category.find_all_by_uid(session[:user].id, :order => "id DESC"), :id, :cname%>
+		</li>
+		<li>
+			<%=f.label :msg, "Message : "%>
+			<%=f.text_field :msg%>
+		</li>
+		<li>
+			<%=f.hidden_field :id%>
+		</li>
+		<li>
+			<%=f.submit "Update"%>
+			<div id="loadingBoxEdit"><img src="/images/loading.gif" id="loading" /></div>
+			<%=link_to "Delete", wdestroy_url(@web.id), :class => "deleteWeb", :rel => @web.title %>
+		</li>
+	</ul>
+<% end %>

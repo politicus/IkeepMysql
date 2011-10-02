@@ -1,0 +1,23 @@
+<% form_for(:web, Website.new, :url => {:controller => "website", :action => "ajax_create"}, :html => { :class => "formAddWeb" }) do |f| %>
+<ul>
+	<li>
+		<%=f.label :title, "Title : "%>
+		<%=f.text_field :title, :class => "required"%>
+	</li>
+	<li>
+		<%=f.label :url, "URL : "%>
+		<%=f.text_field :url, :class => "required url"%>
+	</li>
+	<li>
+		<%=f.label :cid, "Catetory : "%>
+		<%=f.collection_select :cid, Category.find_all_by_uid(session[:user].id, :order => "id DESC"), :id, :cname%>
+	</li>
+	<li>
+		<%=f.label :msg, "Message : "%>
+		<%=f.text_field :msg%>
+	</li>
+	<li>
+		<%=f.submit "Submit"%>
+	</li>
+</ul>
+<% end %>

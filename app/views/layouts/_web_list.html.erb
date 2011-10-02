@@ -1,0 +1,23 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".editWeb").fancybox({
+		'titlePosition'		: 'inside',
+		'overlayShow'		: true,
+		'overlayColor'		: "#fff"
+	});
+});
+</script>
+
+<div class="webDetail">
+	<h3><%=get_web_detail(params[:name], params[:id])%></h3>
+</div>
+
+<ul class="webList">
+	<% @web.each do |w| %>
+		<li>
+			<div class="link"><%=link_to w.title, w.url, :target => "_blank", :title => w.msg%></div>
+			<div class="detail"><%=w.url%> | <%=get_category_by_cid(w.cid)%> | <%=link_to "Edit", wedit_url(w.id), :class => "editWeb manage"%></div>
+	<% end %>
+</ul>
+
+<div class="pg"><%=will_paginate @web%></div>
